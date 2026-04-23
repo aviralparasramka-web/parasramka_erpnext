@@ -15,7 +15,7 @@
 - Key modules to build:
   1. CO7 Tracker — Railway payment pipeline ✅ DONE
   2. Tender Management + CST costing ✅ DONE (Tender Management)
-  3. PSD Tracker — Performance Security Deposit
+  3. PSD Tracker — Performance Security Deposit ✅ DONE
   4. Customer enrichment — vendor registration
   5. Jinja2 Print Formats — 8 letter types
   6. Reports — 9 custom reports
@@ -31,7 +31,7 @@
   __init__.py
 - Module name in all JSON files: "Parasramka ERPNext"
 - All currency fields: INR
-- Naming series format: CO7-.YYYY.-, TND-.YYYY.-
+- Naming series format: CO7-.YYYY.-, TND-.YYYY.-, PSD-.YYYY.-
 - Always use frappe.utils functions for dates
 - Always use frappe.get_all() not raw SQL
 - Always add inline comments on Python logic

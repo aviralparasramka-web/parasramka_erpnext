@@ -1,0 +1,236 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-04-23 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sales_order",
+  "customer",
+  "col_break_1",
+  "order_value",
+  "psd_amount",
+  "status",
+  "sec_break_submission",
+  "psd_submitted",
+  "submission_date",
+  "col_break_2",
+  "submission_doc",
+  "sec_break_supply",
+  "last_supply_date",
+  "psd_expiry",
+  "sec_break_ndc",
+  "ndc_received",
+  "ndc_date",
+  "col_break_3",
+  "ndc_doc",
+  "sec_break_refund",
+  "refund_received",
+  "refund_date",
+  "sec_break_remarks",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "PSD-.YYYY.-",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "sales_order.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "sales_order.grand_total",
+   "fieldname": "order_value",
+   "fieldtype": "Currency",
+   "label": "Order Value",
+   "options": "INR",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "psd_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "PSD Amount (5%)",
+   "options": "INR",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "default": "Pending Submission",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending Submission\nSubmitted\nNDC Awaited\nRefund Awaited\nClosed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_break_submission",
+   "fieldtype": "Section Break",
+   "label": "PSD Submission"
+  },
+  {
+   "fieldname": "psd_submitted",
+   "fieldtype": "Check",
+   "label": "PSD Submitted"
+  },
+  {
+   "depends_on": "eval:doc.psd_submitted == 1",
+   "fieldname": "submission_date",
+   "fieldtype": "Date",
+   "label": "Submission Date"
+  },
+  {
+   "fieldname": "col_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.psd_submitted == 1",
+   "fieldname": "submission_doc",
+   "fieldtype": "Attach",
+   "label": "Submission Document"
+  },
+  {
+   "fieldname": "sec_break_supply",
+   "fieldtype": "Section Break",
+   "label": "Supply Completion"
+  },
+  {
+   "fieldname": "last_supply_date",
+   "fieldtype": "Date",
+   "label": "Last Supply Date"
+  },
+  {
+   "fieldname": "psd_expiry",
+   "fieldtype": "Date",
+   "label": "PSD Expiry (14 months from last supply)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_break_ndc",
+   "fieldtype": "Section Break",
+   "label": "NDC (No Dues Certificate)"
+  },
+  {
+   "fieldname": "ndc_received",
+   "fieldtype": "Check",
+   "label": "NDC Received"
+  },
+  {
+   "depends_on": "eval:doc.ndc_received == 1",
+   "fieldname": "ndc_date",
+   "fieldtype": "Date",
+   "label": "NDC Date"
+  },
+  {
+   "fieldname": "col_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.ndc_received == 1",
+   "fieldname": "ndc_doc",
+   "fieldtype": "Attach",
+   "label": "NDC Document"
+  },
+  {
+   "fieldname": "sec_break_refund",
+   "fieldtype": "Section Break",
+   "label": "Refund"
+  },
+  {
+   "fieldname": "refund_received",
+   "fieldtype": "Check",
+   "label": "Refund Received"
+  },
+  {
+   "depends_on": "eval:doc.refund_received == 1",
+   "fieldname": "refund_date",
+   "fieldtype": "Date",
+   "label": "Refund Date"
+  },
+  {
+   "fieldname": "sec_break_remarks",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "links": [],
+ "modified": "2026-04-23 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Parasramka ERPNext",
+ "name": "PSD Tracker",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 0,
+   "delete": 0,
+   "email": 0,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 0,
+   "write": 0
+  }
+ ],
+ "sort_field": "psd_expiry",
+ "sort_order": "ASC",
+ "states": [],
+ "track_changes": 1
+}
