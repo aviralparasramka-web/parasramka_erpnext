@@ -11,6 +11,7 @@ app_license     = "MIT"
 scheduler_events = {
     "daily": [
         "parasramka_erpnext.parasramka_erpnext.doctype.co7_tracker.co7_tracker.check_co7_ageing",
+        "parasramka_erpnext.parasramka_erpnext.doctype.tender_management.tender_management.check_tender_deadlines",
     ],
 }
 

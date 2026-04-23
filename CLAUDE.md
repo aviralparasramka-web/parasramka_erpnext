@@ -13,8 +13,8 @@
 - Customers: Railway zones (Loco/Coaches/Zonal),
   Defence (MIL/YIL/AWEIL), Private
 - Key modules to build:
-  1. CO7 Tracker — Railway payment pipeline
-  2. Tender Management + CST costing
+  1. CO7 Tracker — Railway payment pipeline ✅ DONE
+  2. Tender Management + CST costing ✅ DONE (Tender Management)
   3. PSD Tracker — Performance Security Deposit
   4. Customer enrichment — vendor registration
   5. Jinja2 Print Formats — 8 letter types
@@ -23,7 +23,7 @@
 
 ## Technical Rules — ALWAYS Follow
 - DocTypes go in:
-  parasramka_erpnext/parasramka_erpnext/doctype/
+  parasramka_erpnext/parasramka_erpnext/parasramka_erpnext/doctype/
 - Every DocType needs exactly 4 files:
   doctype_name.json
   doctype_name.py
