@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 authors = [
     { name = "Parasramka Engineering Pvt. Ltd.", email = "aviral.parasramka@gmail.com" }
 ]
-dependencies = []
+dependencies = ["frappe"]
 
 [project.urls]
 Homepage   = "https://github.com/aviralparasramka-web/parasramka_erpnext"
@@ -24,3 +24,6 @@ include = ["parasramka_erpnext*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.json", "*.js", "*.css", "*.html", "*.md"]
+
+[tool.frappe]
+frappe_version = ">=15.0.0,<17.0.0"
