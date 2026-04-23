@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=45", "setuptools.backends"]
-build-backend = "setuptools.backends.legacy:build"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "parasramka_erpnext"
@@ -16,6 +16,3 @@ dependencies = []
 
 [tool.bench.frappe-dependencies]
 frappe = ">=15.0.0,<=17.0.0"
-
-[tool.uv.extra-build-dependencies]
-parasramka_erpnext = ["setuptools.backends"]
