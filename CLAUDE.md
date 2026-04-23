@@ -19,7 +19,7 @@
   4. Customer enrichment — vendor registration
   5. Jinja2 Print Formats — 8 letter types ✅ DONE
   6. Reports — 9 custom reports ✅ DONE
-  7. Claude AI integration — Options A, B, D
+  7. Claude AI integration — Options A, B, D ✅ DONE
 
 ## Technical Rules — ALWAYS Follow
 - DocTypes go in:
@@ -87,3 +87,15 @@ submission_date, submission_doc, last_supply_date,
 psd_expiry (auto: last_supply_date + 14 months),
 ndc_received, ndc_date, ndc_doc,
 refund_received, refund_date, status, remarks
+
+## Claude AI Integration
+- API backend: parasramka_erpnext/parasramka_erpnext/api/claude_integration.py
+  - query_erpnext_data(question, doctype=None) — Option A
+  - draft_letter(letter_type, document_name) — Option B
+  - get_api_key() reads from frappe.conf (site_config.json key: anthropic_api_key)
+- PEPL Assistant page: parasramka_erpnext/parasramka_erpnext/page/pepl_assistant/
+  — accessible at /pepl-assistant or via Desk search "PEPL Assistant"
+- Quotation "Draft with Claude" button: parasramka_erpnext/public/js/quotation_claude.js
+  — registered via doctype_js in hooks.py
+- API key stored in Frappe Cloud site_config.json (NEVER in code)
+  On Frappe Cloud: Site → Settings → Site Config → Add key anthropic_api_key

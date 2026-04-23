@@ -16,6 +16,12 @@ scheduler_events = {
     ],
 }
 
+# ── DocType JS Overrides ──────────────────────────────────────────────────────
+# Injects "Draft with Claude" button into the Quotation form
+doctype_js = {
+    "Quotation": "public/js/quotation_claude.js",
+}
+
 # ── Document Event Hooks ──────────────────────────────────────────────────────
 # doc_events = {
 #     "Sales Invoice": {

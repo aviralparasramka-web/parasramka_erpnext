@@ -1,0 +1,346 @@
+/* ── PEPL Assistant Page Styles ─────────────────────────────────────────────── */
+
+:root {
+  --pepl-blue:      #003580;
+  --pepl-blue-lt:   #0052cc;
+  --pepl-accent:    #e8b84b;  /* gold accent */
+  --pepl-bg:        #f4f5f7;
+  --pepl-card:      #ffffff;
+  --pepl-border:    #dfe1e6;
+  --pepl-text:      #172b4d;
+  --pepl-text-sub:  #5e6c84;
+  --pepl-user-bg:   #003580;
+  --pepl-user-fg:   #ffffff;
+  --pepl-ai-bg:     #ffffff;
+  --pepl-ai-fg:     #172b4d;
+  --radius:         12px;
+}
+
+.pepl-assistant-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 16px 16px;
+  gap: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--pepl-text);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.pepl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--pepl-blue);
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(0,53,128,0.25);
+}
+
+.pepl-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pepl-logo-icon {
+  font-size: 28px;
+  background: var(--pepl-accent);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.pepl-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.pepl-header-sub {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.pepl-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.pepl-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74,222,128,0.3);
+}
+
+.pepl-status-dot.loading {
+  background: var(--pepl-accent);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Suggestion chips ────────────────────────────────────────────────────────── */
+
+.pepl-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pepl-chip {
+  background: var(--pepl-card);
+  border: 1px solid var(--pepl-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--pepl-blue);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.pepl-chip:hover {
+  background: var(--pepl-blue);
+  color: #fff;
+  border-color: var(--pepl-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,53,128,0.2);
+}
+
+/* ── Chat window ─────────────────────────────────────────────────────────────── */
+
+.pepl-chat-window {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--pepl-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid var(--pepl-border);
+  scroll-behavior: smooth;
+}
+
+/* ── Message bubbles ─────────────────────────────────────────────────────────── */
+
+.pepl-bubble {
+  display: flex;
+  gap: 10px;
+  max-width: 85%;
+  animation: fadeSlideIn 0.2s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pepl-bubble.user {
+  flex-direction: row-reverse;
+  align-self: flex-end;
+}
+
+.pepl-bubble.assistant {
+  align-self: flex-start;
+}
+
+.pepl-bubble-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pepl-bubble.user .pepl-bubble-avatar {
+  background: var(--pepl-accent);
+  color: var(--pepl-blue);
+}
+
+.pepl-bubble.assistant .pepl-bubble-avatar {
+  background: var(--pepl-blue);
+  color: #fff;
+}
+
+.pepl-bubble-body {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.pepl-bubble.user .pepl-bubble-body {
+  background: var(--pepl-user-bg);
+  color: var(--pepl-user-fg);
+  border-bottom-right-radius: 4px;
+}
+
+.pepl-bubble.assistant .pepl-bubble-body {
+  background: var(--pepl-ai-bg);
+  color: var(--pepl-ai-fg);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--pepl-border);
+}
+
+.pepl-bubble-body p  { margin: 0 0 8px; }
+.pepl-bubble-body p:last-child { margin: 0; }
+.pepl-bubble-body ul { margin: 6px 0; padding-left: 18px; }
+.pepl-bubble-body li { margin-bottom: 4px; }
+.pepl-bubble-body strong { color: var(--pepl-blue); }
+
+/* Typing indicator */
+.pepl-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 18px;
+}
+
+.pepl-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pepl-text-sub);
+  animation: typing-bounce 1.2s infinite;
+}
+
+.pepl-typing span:nth-child(2) { animation-delay: 0.2s; }
+.pepl-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-6px); }
+}
+
+/* Timestamp */
+.pepl-timestamp {
+  font-size: 10px;
+  color: var(--pepl-text-sub);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.pepl-bubble.assistant .pepl-timestamp {
+  text-align: left;
+}
+
+/* ── Input area ──────────────────────────────────────────────────────────────── */
+
+.pepl-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pepl-input-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  background: var(--pepl-card);
+  border: 2px solid var(--pepl-border);
+  border-radius: 16px;
+  padding: 10px 10px 10px 16px;
+  transition: border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.pepl-input-wrapper:focus-within {
+  border-color: var(--pepl-blue-lt);
+  box-shadow: 0 0 0 3px rgba(0,82,204,0.12);
+}
+
+.pepl-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--pepl-text);
+  background: transparent;
+  max-height: 120px;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.pepl-input::placeholder {
+  color: var(--pepl-text-sub);
+}
+
+.pepl-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--pepl-blue);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.pepl-send-btn:hover  { background: var(--pepl-blue-lt); transform: scale(1.05); }
+.pepl-send-btn:active { transform: scale(0.95); }
+.pepl-send-btn:disabled { background: var(--pepl-border); cursor: not-allowed; transform: none; }
+
+.pepl-input-hint {
+  font-size: 11px;
+  color: var(--pepl-text-sub);
+  text-align: center;
+}
+
+.pepl-input-hint kbd {
+  background: var(--pepl-bg);
+  border: 1px solid var(--pepl-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 10px;
+}
+
+/* ── Welcome message ─────────────────────────────────────────────────────────── */
+
+.pepl-welcome-msg .pepl-bubble-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.pepl-welcome-msg .pepl-bubble-body li::before {
+  content: "→ ";
+  color: var(--pepl-blue);
+}
+
+/* ── Error bubble ────────────────────────────────────────────────────────────── */
+
+.pepl-bubble.error .pepl-bubble-body {
+  background: #fff0f0;
+  border-color: #ffb3b3;
+  color: #c0392b;
+}
