@@ -1,4 +1,4 @@
-from . import __version__ as app_version
+app_version     = "0.0.1"
 
 app_name        = "parasramka_erpnext"
 app_title       = "Parasramka ERPNext"
@@ -6,7 +6,6 @@ app_publisher   = "Parasramka Engineering Pvt. Ltd."
 app_description = "Custom ERP for Defence & Railways heavy engineering"
 app_email       = "aviral.parasramka@gmail.com"
 app_license     = "MIT"
-app_version     = __version__
 
 # ── Scheduled Tasks ───────────────────────────────────────────────────────────
 scheduler_events = {
