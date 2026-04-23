@@ -1,0 +1,313 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-04-23 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sales_invoice",
+  "customer",
+  "col_break_1",
+  "railway_zone",
+  "po_contract_no",
+  "sec_break_invoice",
+  "invoice_date",
+  "invoice_amount",
+  "current_stage",
+  "col_break_2",
+  "ageing_days",
+  "sec_break_dispatch",
+  "dispatch_date",
+  "lr_rr_no",
+  "col_break_3",
+  "transporter",
+  "consignee",
+  "sec_break_rnote",
+  "r_note_no",
+  "r_note_date",
+  "col_break_4",
+  "bill_submission_date",
+  "paying_authority",
+  "sec_break_co7",
+  "co7_no",
+  "co7_date",
+  "col_break_5",
+  "payment_expected_date",
+  "sec_break_payment",
+  "amount_received",
+  "payment_date",
+  "tds_deducted",
+  "col_break_6",
+  "sd_ld_deduction",
+  "net_payment_received",
+  "outstanding_amount",
+  "sec_break_remarks",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "CO7-.YYYY.-",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sales Invoice",
+   "options": "Sales Invoice"
+  },
+  {
+   "bold": 1,
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "col_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "railway_zone",
+   "fieldtype": "Data",
+   "label": "Railway Zone"
+  },
+  {
+   "fieldname": "po_contract_no",
+   "fieldtype": "Data",
+   "label": "PO / Contract No."
+  },
+  {
+   "fieldname": "sec_break_invoice",
+   "fieldtype": "Section Break",
+   "label": "Invoice Details"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Invoice Date",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "invoice_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Invoice Amount",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "default": "Invoice Raised",
+   "fieldname": "current_stage",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Current Stage",
+   "options": "Invoice Raised\nDispatched\nR-Note Received\nBills Submitted\nCO7 Issued\nPayment Received",
+   "reqd": 1
+  },
+  {
+   "fieldname": "col_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ageing_days",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Ageing (Days)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_break_dispatch",
+   "fieldtype": "Section Break",
+   "label": "Dispatch Details"
+  },
+  {
+   "fieldname": "dispatch_date",
+   "fieldtype": "Date",
+   "label": "Dispatch Date"
+  },
+  {
+   "fieldname": "lr_rr_no",
+   "fieldtype": "Data",
+   "label": "LR / RR No."
+  },
+  {
+   "fieldname": "col_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transporter",
+   "fieldtype": "Data",
+   "label": "Transporter"
+  },
+  {
+   "fieldname": "consignee",
+   "fieldtype": "Data",
+   "label": "Consignee"
+  },
+  {
+   "fieldname": "sec_break_rnote",
+   "fieldtype": "Section Break",
+   "label": "R-Note & Bill Submission"
+  },
+  {
+   "fieldname": "r_note_no",
+   "fieldtype": "Data",
+   "label": "R-Note No."
+  },
+  {
+   "fieldname": "r_note_date",
+   "fieldtype": "Date",
+   "label": "R-Note Date"
+  },
+  {
+   "fieldname": "col_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bill_submission_date",
+   "fieldtype": "Date",
+   "label": "Bill Submission Date"
+  },
+  {
+   "fieldname": "paying_authority",
+   "fieldtype": "Data",
+   "label": "Paying Authority"
+  },
+  {
+   "fieldname": "sec_break_co7",
+   "fieldtype": "Section Break",
+   "label": "CO7 Details"
+  },
+  {
+   "fieldname": "co7_no",
+   "fieldtype": "Data",
+   "label": "CO7 No."
+  },
+  {
+   "fieldname": "co7_date",
+   "fieldtype": "Date",
+   "label": "CO7 Date"
+  },
+  {
+   "fieldname": "col_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_expected_date",
+   "fieldtype": "Date",
+   "label": "Payment Expected Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_break_payment",
+   "fieldtype": "Section Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "amount_received",
+   "fieldtype": "Currency",
+   "label": "Amount Received"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "label": "Payment Date"
+  },
+  {
+   "fieldname": "tds_deducted",
+   "fieldtype": "Currency",
+   "label": "TDS Deducted"
+  },
+  {
+   "fieldname": "col_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sd_ld_deduction",
+   "fieldtype": "Currency",
+   "label": "SD / LD Deduction"
+  },
+  {
+   "fieldname": "net_payment_received",
+   "fieldtype": "Currency",
+   "label": "Net Payment Received",
+   "read_only": 1
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_break_remarks",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "links": [],
+ "modified": "2026-04-23 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Parasramka ERPNext",
+ "name": "CO7 Tracker",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 0,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 0,
+   "delete": 0,
+   "email": 0,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 0,
+   "write": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
