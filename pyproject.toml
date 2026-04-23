@@ -19,3 +19,4 @@ frappe = ">=15.0.0,<=17.0.0"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["parasramka_erpnext*"]
+exclude = ["parasramka_erpnext.parasramka_erpnext*"]
