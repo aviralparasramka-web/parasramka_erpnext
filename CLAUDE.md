@@ -17,7 +17,7 @@
   2. Tender Management + CST costing ✅ DONE (Tender Management + CST Cost Sheet)
   3. PSD Tracker — Performance Security Deposit ✅ DONE
   4. Customer enrichment — vendor registration
-  5. Jinja2 Print Formats — 8 letter types
+  5. Jinja2 Print Formats — 8 letter types ✅ DONE
   6. Reports — 9 custom reports
   7. Claude AI integration — Options A, B, D
 

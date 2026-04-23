@@ -1,0 +1,141 @@
+{#-
+  Print Format : Payment Request Letter
+  Trigger      : Sales Invoice
+  Fields used  : doc.name, doc.customer, doc.customer_name,
+                 doc.posting_date, doc.grand_total, doc.outstanding_amount,
+                 doc.po_no, doc.custom_despatch_details,
+                 doc.custom_co7_status, doc.custom_bank_details,
+                 doc.custom_lr_rr_no, doc.custom_dispatch_date
+-#}
+
+{% set letter_date  = frappe.format_date(doc.posting_date or frappe.utils.today()) %}
+{% set customer     = doc.customer_name or doc.customer or "[Customer]" %}
+{% set outstanding  = doc.outstanding_amount or doc.grand_total or 0 %}
+
+<style>
+  @page { size: A4 portrait; margin: 18mm 20mm 20mm 20mm; }
+  body  { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000; line-height: 1.6; }
+
+  .lh-wrap    { width: 100%; border-bottom: 3px solid #003580; padding-bottom: 8px; margin-bottom: 14px; }
+  .lh-company { font-size: 20px; font-weight: bold; color: #003580; }
+  .lh-tagline { font-size: 10px; color: #555; }
+  .lh-details { font-size: 10px; color: #333; margin-top: 4px; }
+  .lh-right   { text-align: right; vertical-align: top; }
+  .lh-logo-box{ border: 1px solid #ccc; padding: 8px 14px; font-size: 9px; color: #aaa; display: inline-block; min-width: 90px; text-align: center; }
+
+  .ref-block  { margin-bottom: 16px; }
+  .ref-block td{ padding: 2px 8px 2px 0; }
+  .to-block   { margin: 16px 0; }
+  .subject-line{ font-weight: bold; text-decoration: underline; margin: 16px 0 10px; }
+  .body-text  { margin-bottom: 10px; text-align: justify; }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  .data-table th { background: #003580; color: #fff; padding: 6px 10px; text-align: left; font-size: 11px; }
+  .data-table td { border: 1px solid #ccc; padding: 7px 10px; vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: #f4f6fb; }
+  .data-table .amt { text-align: right; font-weight: bold; }
+
+  .amount-highlight {
+    background: #003580; color: #fff;
+    padding: 10px 16px; font-size: 14px; font-weight: bold;
+    text-align: center; margin: 16px 0; border-radius: 3px;
+  }
+  .bank-box   { border: 1px solid #003580; padding: 10px 14px; background: #f0f4ff; border-radius: 3px; margin: 14px 0; font-size: 11px; }
+  .bank-box table td { padding: 3px 10px 3px 0; }
+
+  .sig-block  { margin-top: 40px; }
+  .sig-line   { border-top: 1px solid #000; width: 220px; margin-top: 55px; padding-top: 4px; }
+  .sig-dsc    { font-size: 9px; color: #555; }
+  .page-footer{ position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid #ccc; padding-top: 4px; font-size: 9px; color: #888; text-align: center; }
+</style>
+
+<!-- ── LETTERHEAD ── -->
+<table class="lh-wrap" width="100%">
+  <tr>
+    <td>
+      <div class="lh-company">Parasramka Engineering Pvt. Ltd.</div>
+      <div class="lh-tagline">Precision Heavy Engineering — Defence &amp; Railways</div>
+      <div class="lh-details">[Address to be filled by PEPL] &nbsp;|&nbsp; GSTIN: [To be filled by PEPL]</div>
+    </td>
+    <td class="lh-right"><div class="lh-logo-box">PEPL<br>LOGO</div></td>
+  </tr>
+</table>
+
+<!-- ── REF & DATE ── -->
+<div class="ref-block">
+  <table>
+    <tr><td><strong>Our Ref.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>PEPL/PAY/{{ doc.name }}/{{ frappe.utils.nowdate()[:4] }}</td></tr>
+    <tr><td><strong>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>{{ letter_date }}</td></tr>
+    <tr><td><strong>Invoice No.&nbsp;&nbsp;:</strong></td><td>{{ doc.name }}</td></tr>
+    <tr><td><strong>Customer PO&nbsp;:</strong></td><td>{{ doc.po_no or "[PO No.]" }}</td></tr>
+  </table>
+</div>
+
+<!-- ── ADDRESSEE ── -->
+<div class="to-block">
+  To,<br>
+  <strong>The Accounts / Finance Department</strong><br>
+  <strong>{{ customer }}</strong><br>
+  [Customer Address]
+</div>
+
+<div class="subject-line">
+  Sub: Request for Release of Payment — Invoice No. {{ doc.name }}
+</div>
+
+<div class="body-text">Dear Sir / Madam,</div>
+<div class="body-text">
+  This is with reference to our above-mentioned invoice for supply of goods against your
+  Purchase Order. We are pleased to inform you that the material has been despatched as per
+  the details given below. Kindly arrange to release the payment at the earliest.
+</div>
+
+<!-- ── INVOICE SUMMARY ── -->
+<table class="data-table">
+  <tr><th colspan="2">Invoice &amp; Despatch Details</th></tr>
+  <tr><td style="width:40%">Invoice No.</td><td>{{ doc.name }}</td></tr>
+  <tr><td>Invoice Date</td><td>{{ frappe.format_date(doc.posting_date) }}</td></tr>
+  <tr><td>Invoice Amount (₹)</td><td>{{ frappe.format(doc.grand_total, {"fieldtype": "Currency"}) }}</td></tr>
+  <tr><td>Despatch Date</td><td>{{ frappe.format_date(doc.custom_dispatch_date) if doc.custom_dispatch_date else "[Despatch Date]" }}</td></tr>
+  <tr><td>LR / RR No.</td><td>{{ doc.custom_lr_rr_no or "[LR / RR No.]" }}</td></tr>
+  <tr><td>Despatch Details</td><td>{{ doc.custom_despatch_details or "[Transporter / Consignee Details]" }}</td></tr>
+  <tr><td>CO7 Status</td><td>{{ doc.custom_co7_status or "[CO7 Stage]" }}</td></tr>
+</table>
+
+<!-- ── AMOUNT DUE HIGHLIGHT ── -->
+<div class="amount-highlight">
+  Amount Due: ₹ {{ frappe.format(outstanding, {"fieldtype": "Currency"}) }}
+</div>
+
+<!-- ── BANK DETAILS ── -->
+<div class="bank-box">
+  <strong>Please remit payment to our bank account:</strong>
+  <table style="margin-top:8px;">
+    <tr><td><strong>Bank Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>{{ doc.custom_bank_name or "[Bank Name]" }}</td></tr>
+    <tr><td><strong>Account No.&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>{{ doc.custom_account_no or "[Account No.]" }}</td></tr>
+    <tr><td><strong>IFSC Code&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>{{ doc.custom_ifsc_code or "[IFSC Code]" }}</td></tr>
+    <tr><td><strong>Account Name&nbsp;&nbsp;:</strong></td><td>Parasramka Engineering Pvt. Ltd.</td></tr>
+    <tr><td><strong>Branch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong></td><td>{{ doc.custom_bank_branch or "[Branch Name]" }}</td></tr>
+  </table>
+</div>
+
+<div class="body-text">
+  Kindly arrange for release of payment and send the UTR / transaction details to
+  <strong>accounts@parasramka.com</strong>. Please also update the CO7 / payment tracking
+  at the earliest.
+</div>
+<div class="body-text">Thanking you.</div>
+
+<!-- ── SIGNATURE ── -->
+<div class="sig-block">
+  <div>For <strong>Parasramka Engineering Pvt. Ltd.</strong></div>
+  <div class="sig-line">
+    <strong>Authorised Signatory</strong>
+    <div class="sig-dsc">[DSC Signature Block]</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  Parasramka Engineering Pvt. Ltd. &nbsp;|&nbsp; GSTIN: [To be filled] &nbsp;|&nbsp;
+  Invoice: {{ doc.name }} &nbsp;|&nbsp; Printed: {{ frappe.format_date(frappe.utils.today()) }}
+</div>
