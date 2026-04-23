@@ -67,11 +67,8 @@ function add_cost_sheet_button(frm) {
     frm.remove_custom_button(__('Create Cost Sheet'), __('Actions'));
     if (frm.doc.status === 'Submitted' && !frm.doc.linked_cost_sheet && !frm.doc.__islocal) {
         frm.add_custom_button(__('Create Cost Sheet'), function () {
-            frappe.new_doc('Cost Sheet', {
-                tender:    frm.doc.name,
-                customer:  frm.doc.customer,
-                item:      frm.doc.item,
-                quantity:  frm.doc.quantity,
+            frappe.new_doc('CST Cost Sheet', {
+                tender: frm.doc.name,
             });
         }, __('Actions'));
     }

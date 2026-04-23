@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "creation": "2026-04-23 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "rm_category",
+  "vendor_name",
+  "last_quoted_rate",
+  "rate_date",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "rm_category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "RM Category",
+   "options": "\nPlates\nBars\nForgings\nFasteners\nBought-Out\nOther"
+  },
+  {
+   "bold": 1,
+   "fieldname": "vendor_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Vendor Name"
+  },
+  {
+   "fieldname": "last_quoted_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Last Quoted Rate",
+   "options": "INR"
+  },
+  {
+   "fieldname": "rate_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Rate Date"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-04-23 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Parasramka ERPNext",
+ "name": "CST Approved Vendor",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -201,7 +201,7 @@
    "fieldname": "linked_cost_sheet",
    "fieldtype": "Link",
    "label": "Linked Cost Sheet",
-   "options": "Cost Sheet"
+   "options": "CST Cost Sheet"
   },
   {
    "fieldname": "linked_quotation",
