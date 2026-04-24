@@ -23,11 +23,21 @@ doctype_js = {
 }
 
 # ── Document Event Hooks ──────────────────────────────────────────────────────
-# doc_events = {
-#     "Sales Invoice": {
-#         "on_submit": "parasramka_erpnext.overrides.sales_invoice.on_submit",
-#     },
-# }
+doc_events = {
+    # Linkage 3: Auto-create PSD Tracker on Sales Order submit
+    # Linkage 8: Auto-mark Tender as Won if SO carries custom_tender_ref
+    "Sales Order": {
+        "on_submit": "parasramka_erpnext.parasramka_erpnext.doc_events.sales_order.on_submit",
+    },
+    # Linkage 4: Auto-create CO7 Tracker for Railway invoices
+    "Sales Invoice": {
+        "on_submit": "parasramka_erpnext.parasramka_erpnext.doc_events.sales_invoice.on_submit",
+    },
+    # Linkage 5: Advance CO7 stage to Dispatched on Delivery Note submit
+    "Delivery Note": {
+        "on_submit": "parasramka_erpnext.parasramka_erpnext.doc_events.delivery_note.on_submit",
+    },
+}
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 # fixtures = [

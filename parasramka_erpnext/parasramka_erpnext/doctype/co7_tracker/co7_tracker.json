@@ -8,6 +8,8 @@
  "field_order": [
   "naming_series",
   "sales_invoice",
+  "sales_order",
+  "delivery_note",
   "customer",
   "col_break_1",
   "railway_zone",
@@ -44,6 +46,7 @@
   "net_payment_received",
   "outstanding_amount",
   "sec_break_remarks",
+  "psd_tracker",
   "remarks"
  ],
  "fields": [
@@ -62,6 +65,18 @@
    "in_list_view": 1,
    "label": "Sales Invoice",
    "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Delivery Note",
+   "options": "Delivery Note"
   },
   {
    "bold": 1,
@@ -254,6 +269,13 @@
   {
    "fieldname": "sec_break_remarks",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "psd_tracker",
+   "fieldtype": "Link",
+   "label": "PSD Tracker",
+   "options": "PSD Tracker",
+   "read_only": 1
   },
   {
    "fieldname": "remarks",

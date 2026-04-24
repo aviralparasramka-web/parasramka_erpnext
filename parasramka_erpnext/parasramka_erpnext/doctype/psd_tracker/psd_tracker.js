@@ -5,6 +5,8 @@ frappe.ui.form.on('PSD Tracker', {
         toggle_ndc_fields(frm);
         toggle_refund_fields(frm);
         show_expiry_warning(frm);
+        // Linkage 9: cross-module navigation
+        _add_psd_navigation_buttons(frm);
     },
 
     sales_order(frm) {
@@ -97,6 +99,48 @@ function show_expiry_warning(frm) {
     } else if (days_left <= 30) {
         frm.dashboard.set_headline_alert(
             `<span class="text-warning">PSD expires in ${days_left} day(s) on ${frm.doc.psd_expiry}. Follow up for NDC / refund.</span>`
+        );
+    }
+}
+
+// ── Linkage 9 navigation buttons ─────────────────────────────────────────────
+
+function _add_psd_navigation_buttons(frm) {
+    frm.remove_custom_button(__('View Sales Order'), __('Navigate'));
+    frm.remove_custom_button(__('View CO7 Tracker'), __('Navigate'));
+
+    if (frm.doc.__islocal) return;
+
+    // Always show Sales Order link — it's the primary key of PSD Tracker
+    if (frm.doc.sales_order) {
+        frm.add_custom_button(__('View Sales Order'), () => {
+            frappe.set_route('Form', 'Sales Order', frm.doc.sales_order);
+        }, __('Navigate'));
+    }
+
+    // CO7 Tracker — new Linkage 7 field
+    if (frm.doc.linked_co7) {
+        frm.add_custom_button(__('View CO7 Tracker'), () => {
+            frappe.set_route('Form', 'CO7 Tracker', frm.doc.linked_co7);
+        }, __('Navigate'));
+    } else if (frm.doc.sales_order) {
+        // Fallback: find via Sales Invoice linked to this SO
+        frappe.db.get_value(
+            'Sales Invoice Item',
+            { sales_order: frm.doc.sales_order, docstatus: 1 },
+            'parent',
+            (r) => {
+                if (!r || !r.parent) return;
+                frappe.db.get_value('CO7 Tracker', { sales_invoice: r.parent }, 'name',
+                    (co7r) => {
+                        if (co7r && co7r.name) {
+                            frm.add_custom_button(__('View CO7 Tracker'), () => {
+                                frappe.set_route('Form', 'CO7 Tracker', co7r.name);
+                            }, __('Navigate'));
+                        }
+                    }
+                );
+            }
         );
     }
 }

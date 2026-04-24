@@ -63,12 +63,21 @@ function toggle_loss_fields(frm) {
 }
 
 function add_cost_sheet_button(frm) {
-    // "Create Cost Sheet" appears when status is Submitted and none is linked yet
+    // Show when Submitted or Won, and no cost sheet is linked yet
     frm.remove_custom_button(__('Create Cost Sheet'), __('Actions'));
-    if (frm.doc.status === 'Submitted' && !frm.doc.linked_cost_sheet && !frm.doc.__islocal) {
+    const eligible = ['Submitted', 'Won'].includes(frm.doc.status);
+    if (eligible && !frm.doc.linked_cost_sheet && !frm.doc.__islocal) {
         frm.add_custom_button(__('Create Cost Sheet'), function () {
+            // Pre-fill all header fields from the tender so the user
+            // doesn't have to re-enter what is already known
             frappe.new_doc('CST Cost Sheet', {
-                tender: frm.doc.name,
+                tender:         frm.doc.name,
+                item:           frm.doc.item,
+                drawing_no:     frm.doc.drawing_no,
+                drawing_rev:    frm.doc.drawing_rev,
+                customer:       frm.doc.customer,
+                sector:         frm.doc.sector,
+                total_quantity: frm.doc.quantity,
             });
         }, __('Actions'));
     }

@@ -9,6 +9,7 @@ class CO7Tracker(Document):
         self._calc_payment_fields()
         self._auto_advance_stage()
         self._set_payment_expected_date()
+        self._check_psd_on_payment_received()  # Linkage 6
 
     def validate(self):
         self._check_date_sequence()
@@ -64,6 +65,65 @@ class CO7Tracker(Document):
                 frappe.throw(
                     f"{later_lbl} ({later}) cannot be earlier than {earlier_lbl} ({earlier})."
                 )
+
+    def _check_psd_on_payment_received(self):
+        """Linkage 6 — When stage reaches Payment Received, warn if PSD has not
+        been submitted for the related Sales Order.
+
+        Route: CO7 Tracker → Sales Invoice → Sales Invoice Item.sales_order
+               → PSD Tracker.
+        """
+        if self.current_stage != "Payment Received":
+            return
+
+        # Only fire this warning when the stage is being *set* to Payment Received,
+        # not on every save once it is already there (check the db value).
+        old_stage = frappe.db.get_value("CO7 Tracker", self.name, "current_stage")
+        if old_stage == "Payment Received":
+            return  # already warned on the save that first set this stage
+
+        # Resolve: CO7 → Sales Invoice → Sales Order
+        if not self.sales_invoice:
+            return
+
+        so_name = frappe.db.get_value(
+            "Sales Invoice Item",
+            {"parent": self.sales_invoice},
+            "sales_order",
+        )
+        if not so_name:
+            return
+
+        # Resolve: Sales Order → PSD Tracker
+        psd = frappe.db.get_value(
+            "PSD Tracker",
+            {"sales_order": so_name},
+            ["name", "psd_amount", "psd_submitted"],
+            as_dict=True,
+        )
+
+        if psd:
+            if not psd.psd_submitted:
+                frappe.msgprint(
+                    msg=(
+                        f"Payment received but PSD has <strong>not yet been submitted</strong> "
+                        f"for Sales Order <strong>{so_name}</strong>.<br>"
+                        f"PSD Amount: ₹{flt(psd.psd_amount):,.2f} — "
+                        f"please follow up with the Finance team."
+                    ),
+                    title="PSD Submission Pending",
+                    indicator="orange",
+                )
+        else:
+            frappe.msgprint(
+                msg=(
+                    f"No PSD Tracker found for Sales Order <strong>{so_name}</strong>.<br>"
+                    "If a Performance Security Deposit was required for this order, "
+                    "please create a PSD Tracker manually."
+                ),
+                title="PSD Tracker Not Found",
+                indicator="orange",
+            )
 
     def _warn_over_invoiced(self):
         # Alert the user — does not block save, just highlights a potential data entry error

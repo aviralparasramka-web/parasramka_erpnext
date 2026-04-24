@@ -30,6 +30,7 @@
   "refund_received",
   "refund_date",
   "sec_break_remarks",
+  "linked_co7",
   "remarks"
  ],
  "fields": [
@@ -177,6 +178,13 @@
   {
    "fieldname": "sec_break_remarks",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "linked_co7",
+   "fieldtype": "Link",
+   "label": "Linked CO7 Tracker",
+   "options": "CO7 Tracker",
+   "read_only": 1
   },
   {
    "fieldname": "remarks",

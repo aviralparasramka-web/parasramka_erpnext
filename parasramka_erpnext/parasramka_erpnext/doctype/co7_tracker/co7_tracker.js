@@ -16,6 +16,9 @@ frappe.ui.form.on('CO7 Tracker', {
                 palette[frm.doc.current_stage] || 'grey'
             );
         }
+
+        // ── Linkage 9: cross-module navigation buttons ─────────────────────
+        _add_navigation_buttons(frm);
     },
 
     // Auto-fill invoice fields when a Sales Invoice is selected
@@ -47,6 +50,49 @@ frappe.ui.form.on('CO7 Tracker', {
         frm.set_value('payment_expected_date', expected);
     },
 });
+
+// ── Linkage 9 helpers ─────────────────────────────────────────────────────────
+
+function _add_navigation_buttons(frm) {
+    // Remove stale buttons first so they don't accumulate on re-render
+    frm.remove_custom_button(__('View Sales Order'),  __('Navigate'));
+    frm.remove_custom_button(__('View PSD Tracker'),  __('Navigate'));
+    frm.remove_custom_button(__('View Sales Invoice'), __('Navigate'));
+
+    if (frm.doc.__islocal) return;
+
+    // Sales Invoice is always linkable (core field)
+    if (frm.doc.sales_invoice) {
+        frm.add_custom_button(__('View Sales Invoice'), () => {
+            frappe.set_route('Form', 'Sales Invoice', frm.doc.sales_invoice);
+        }, __('Navigate'));
+    }
+
+    // Sales Order (new Linkage 7 field)
+    if (frm.doc.sales_order) {
+        frm.add_custom_button(__('View Sales Order'), () => {
+            frappe.set_route('Form', 'Sales Order', frm.doc.sales_order);
+        }, __('Navigate'));
+    }
+
+    // PSD Tracker (new Linkage 7 field, auto-filled by Linkage 6 logic)
+    if (frm.doc.psd_tracker) {
+        frm.add_custom_button(__('View PSD Tracker'), () => {
+            frappe.set_route('Form', 'PSD Tracker', frm.doc.psd_tracker);
+        }, __('Navigate'));
+    } else if (frm.doc.sales_order) {
+        // If psd_tracker field not yet populated, try to find one on-the-fly
+        frappe.db.get_value('PSD Tracker', { sales_order: frm.doc.sales_order }, 'name',
+            (r) => {
+                if (r && r.name) {
+                    frm.add_custom_button(__('View PSD Tracker'), () => {
+                        frappe.set_route('Form', 'PSD Tracker', r.name);
+                    }, __('Navigate'));
+                }
+            }
+        );
+    }
+}
 
 function _recalc_payment(frm) {
     const received = flt(frm.doc.amount_received);

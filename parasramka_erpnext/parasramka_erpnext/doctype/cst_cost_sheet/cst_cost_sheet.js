@@ -2,6 +2,7 @@ frappe.ui.form.on('CST Cost Sheet', {
 
     refresh(frm) {
         highlight_final_price(frm);
+        add_create_quotation_button(frm);
     },
 
     tender(frm) {
@@ -113,6 +114,37 @@ function recalculate_totals(frm) {
     frm.set_value('final_unit_price', final_price);
 
     highlight_final_price(frm);
+}
+
+function add_create_quotation_button(frm) {
+    // Show only when a price has been calculated and the doc is saved
+    frm.remove_custom_button(__('Create Quotation'), __('Actions'));
+    if (frm.doc.__islocal || !flt(frm.doc.final_unit_price)) return;
+
+    frm.add_custom_button(__('Create Quotation'), function () {
+        // Use proposed_price as the offer rate; fall back to calculated price
+        const offer_rate = flt(frm.doc.proposed_price) || flt(frm.doc.final_unit_price);
+        const item_desc  = frm.doc.item || 'As per Drawing';
+
+        frappe.new_doc('Quotation', {
+            party_name:           frm.doc.customer,
+            // Custom fields on Quotation — create via Customize Form if not present
+            custom_drawing_no:    frm.doc.drawing_no,
+            custom_drawing_rev:   frm.doc.drawing_rev,
+            custom_tender_ref:    frm.doc.tender,
+            custom_sector:        frm.doc.sector,
+            custom_cst_ref:       frm.doc.name,
+            items: [
+                {
+                    item_name:   item_desc,
+                    description: item_desc,
+                    qty:         frm.doc.total_quantity || 1,
+                    rate:        offer_rate,
+                    uom:         'Nos',
+                },
+            ],
+        });
+    }, __('Actions'));
 }
 
 function highlight_final_price(frm) {
