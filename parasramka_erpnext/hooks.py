@@ -22,6 +22,11 @@ doctype_js = {
     "Quotation": "public/js/quotation_claude.js",
 }
 
+# ── Page JS registration ──────────────────────────────────────────────────────
+page_js = {
+    "pepl-assistant": "parasramka_erpnext/parasramka_erpnext/page/pepl_assistant/pepl_assistant.js",
+}
+
 # ── Document Event Hooks ──────────────────────────────────────────────────────
 doc_events = {
     # Linkage 3: Auto-create PSD Tracker on Sales Order submit
