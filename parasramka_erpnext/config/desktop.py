@@ -8,6 +8,13 @@ def get_data():
             "icon": "octicon octicon-tools",
             "type": "module",
             "label": _("Parasramka ERPNext"),
-            "items": []
+            "items": [
+                {
+                    "type": "doctype",
+                    "name": "Deploy Test",
+                    "label": _("Deploy Test"),
+                    "description": _("Diagnostic — verify Frappe Cloud build")
+                }
+            ]
         }
     ]
