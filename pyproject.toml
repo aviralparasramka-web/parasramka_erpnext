@@ -1,18 +1,22 @@
 [build-system]
-requires = ["setuptools>=45"]
-build-backend = "setuptools.build_meta"
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "parasramka_erpnext"
-version = "0.0.1"
+authors = [
+    { name = "Parasramka Engineering Pvt. Ltd.", email = "aviral.parasramka@gmail.com"}
+]
 description = "Custom ERP for Parasramka Engineering Pvt. Ltd."
 requires-python = ">=3.10"
-license = "MIT"
-authors = [
-    {name = "Parasramka Engineering Pvt. Ltd.", email = "aviral.parasramka@gmail.com"}
+readme = "README.md"
+dynamic = ["version"]
+dependencies = [
+    # "frappe~=15.0.0" # Installed and managed by bench.
 ]
-dependencies = []
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["parasramka_erpnext*"]
+[project.urls]
+Homepage = "https://github.com/aviralparasramka-web/parasramka_erpnext"
+
+[tool.flit.module]
+name = "parasramka_erpnext"
