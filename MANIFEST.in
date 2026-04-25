@@ -1,2 +1,2 @@
-include *.md
-recursive-include parasramka_erpnext *.json *.js *.css *.html *.py
+include pyproject.toml
+recursive-include parasramka_erpnext *.json *.js *.css *.html *.md
